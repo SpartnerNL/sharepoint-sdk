@@ -74,7 +74,11 @@ class SharepointService
         // /v1.0/sites/{tenant}.sharepoint.com:/sites/{sharepoint-web-url}
         // or
         // /v1.0/sites/{siteHostname}:/sites/{sharepoint-web-url}
-        $url = sprintf('/v1.0/sites/%s:/sites/%s', $siteHostname, $siteName);
+        if (empty($siteName)) {
+            $url = sprintf('/v1.0/sites/%s', $siteHostname);
+        } else {
+            $url = sprintf('/v1.0/sites/%s:/sites/%s', $siteHostname, $siteName);
+        }
 
         $response =  $this->apiConnector->request('GET', $url);
 
